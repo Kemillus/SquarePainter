@@ -1,0 +1,9 @@
+D:\Veronika\SquarePainter\SquarePainter\bin\Debug\SquarePainter.exe.config
+D:\Veronika\SquarePainter\SquarePainter\bin\Debug\SquarePainter.exe
+D:\Veronika\SquarePainter\SquarePainter\bin\Debug\SquarePainter.pdb
+D:\Veronika\SquarePainter\SquarePainter\obj\Debug\SquarePainter.csproj.AssemblyReference.cache
+D:\Veronika\SquarePainter\SquarePainter\obj\Debug\SquarePainter.Properties.Resources.resources
+D:\Veronika\SquarePainter\SquarePainter\obj\Debug\SquarePainter.csproj.GenerateResource.cache
+D:\Veronika\SquarePainter\SquarePainter\obj\Debug\SquarePainter.csproj.CoreCompileInputs.cache
+D:\Veronika\SquarePainter\SquarePainter\obj\Debug\SquarePainter.exe
+D:\Veronika\SquarePainter\SquarePainter\obj\Debug\SquarePainter.pdb
