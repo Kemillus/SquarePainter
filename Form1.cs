@@ -16,6 +16,7 @@ namespace SquarePainter
         public Form1()
         {
             InitializeComponent();
+            this.Size = new Size(410, 440);
             Paint += new PaintEventHandler(Painter);
         }
 
@@ -30,7 +31,7 @@ namespace SquarePainter
             int posY = y;
             bool lines = true;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 DrowSquare(g, x, posY, size, lines);
                 posY += size;
@@ -46,12 +47,18 @@ namespace SquarePainter
             for (int i = 0; i < 4; i++)
             {
                 g.DrawRectangle(pen, posX, y, size, size);
-                DrawRotateSquade(g, posX, y,size);
                 if (line)
                 {
                     DrowLines(g, posX, y, size);
                 }
                 line = !line;
+                posX += size;
+            }
+
+            posX = x;
+            for (int i = 0; i < 5; i++)
+            {
+                DrawRotateSquade(g, posX, y - size, size);
                 posX += size;
             }
         }
@@ -73,9 +80,13 @@ namespace SquarePainter
         private void DrawRotateSquade(Graphics g, int x, int y, int size)
         {
             Matrix matrix = new Matrix();
-            matrix.Rotate(45);
+            matrix.RotateAt(45, new PointF(x, y - 150));
             int drift = size / 2;
             g.Transform = matrix;
+
+            g.FillRectangle(Brushes.White, x + size + drift, y, drift, drift);
+
+            g.FillRectangle(Brushes.Black, x+size+drift+drift/4, y+drift/4, drift / 2, drift / 2);
             g.DrawRectangle(pen, x + size + drift, y, drift, drift);
             matrix.Reset();
             g.Transform = matrix;
