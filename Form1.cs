@@ -10,8 +10,8 @@ namespace SquarePainter
 {
     public partial class Form1 : Form
     {
-        Pen pen = new Pen(Brushes.Black, 2);
-        SolidBrush brush = new SolidBrush(Color.Black);
+        private Pen pen = new Pen(Brushes.Black, 2);
+        private SolidBrush brush = new SolidBrush(Color.Black);
 
         public Form1()
         {
@@ -23,23 +23,25 @@ namespace SquarePainter
         private void Painter(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            DrowSquares(g, 1, 1, 100);
+            DrawSquares(g, 1, 1, 100);
         }
 
-        private void DrowSquares(Graphics g, int x, int y, int size)
+        private void DrawSquares(Graphics g, int x, int y, int size)
         {
             int posY = y;
             bool lines = true;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++) 
             {
-                DrowSquare(g, x, posY, size, lines);
+                DrawSquare(g, x, posY, size, lines);
                 posY += size;
                 lines = !lines;
             }
+
+            DrawRotateSquaresAroundGrid(g, x, y, size);
         }
 
-        private void DrowSquare(Graphics g, int x, int y, int size, bool lines = true)
+        private void DrawSquare(Graphics g, int x, int y, int size, bool lines = true)
         {
             int posX = x;
             bool line = lines;
@@ -47,23 +49,18 @@ namespace SquarePainter
             for (int i = 0; i < 4; i++)
             {
                 g.DrawRectangle(pen, posX, y, size, size);
+
                 if (line)
                 {
-                    DrowLines(g, posX, y, size);
+                    DrawLines(g, posX, y, size);
                 }
-                line = !line;
-                posX += size;
-            }
 
-            posX = x;
-            for (int i = 0; i < 5; i++)
-            {
-                DrawRotateSquade(g, posX, y - size, size);
+                line = !line;
                 posX += size;
             }
         }
 
-        private void DrowLines(Graphics g, int x, int y, int size)
+        private void DrawLines(Graphics g, int x, int y, int size)
         {
             int interval = 10;
             Point p1 = new Point(x + interval, y);
@@ -77,19 +74,39 @@ namespace SquarePainter
             }
         }
 
-        private void DrawRotateSquade(Graphics g, int x, int y, int size)
+        private void DrawRotateSquaresAroundGrid(Graphics g, int x, int y, int size)
+        {
+            int posY = y;
+            int scale = size / 2;
+            for (int i = 0; i < 5; i++)
+            {
+                int posX = x;
+                for (int j = 0; j < 5; j++)
+                {
+                    DrawRotateSquare(g, posX-scale/2, posY-scale/2, scale);
+                    posX += size;
+                }
+                posY += size;
+            }
+        }
+
+
+        private void DrawRotateSquare(Graphics g, int x, int y, int size)
         {
             Matrix matrix = new Matrix();
-            matrix.RotateAt(45, new PointF(x, y - 150));
-            int drift = size / 2;
+            matrix.RotateAt(45, new PointF(x + size / 2, y + size / 2));
+
             g.Transform = matrix;
+            g.FillRectangle(Brushes.White, x, y, size, size);
+            g.FillRectangle(Brushes.Black, x + size / 4, y + size / 4, size / 2, size / 2);
+            g.DrawRectangle(pen, x, y, size, size);
 
-            g.FillRectangle(Brushes.White, x + size + drift, y, drift, drift);
-
-            g.FillRectangle(Brushes.Black, x+size+drift+drift/4, y+drift/4, drift / 2, drift / 2);
-            g.DrawRectangle(pen, x + size + drift, y, drift, drift);
             matrix.Reset();
             g.Transform = matrix;
         }
     }
+
+
+
+
 }
