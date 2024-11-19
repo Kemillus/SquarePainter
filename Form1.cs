@@ -31,7 +31,7 @@ namespace SquarePainter
             int posY = y;
             bool lines = true;
 
-            for (int i = 0; i < 4; i++) 
+            for (int i = 0; i < 4; i++)
             {
                 DrawSquare(g, x, posY, size, lines);
                 posY += size;
@@ -49,11 +49,13 @@ namespace SquarePainter
             for (int i = 0; i < 4; i++)
             {
                 g.DrawRectangle(pen, posX, y, size, size);
-
                 if (line)
                 {
                     DrawLines(g, posX, y, size);
+
+                    //DrawRotateSquare(g, posX + size / 3, y + size / 3, size / 4);
                 }
+                DrawRotateSquare(g, posX + size / 3, y + size / 3, size / 3, line);
 
                 line = !line;
                 posX += size;
@@ -83,30 +85,27 @@ namespace SquarePainter
                 int posX = x;
                 for (int j = 0; j < 5; j++)
                 {
-                    DrawRotateSquare(g, posX-scale/2, posY-scale/2, scale);
+                    DrawRotateSquare(g, posX - scale / 2, posY - scale / 2, scale);
                     posX += size;
                 }
                 posY += size;
             }
         }
 
-
-        private void DrawRotateSquare(Graphics g, int x, int y, int size)
+        private void DrawRotateSquare(Graphics g, int x, int y, int size, bool isTwoSquare = true)
         {
             Matrix matrix = new Matrix();
             matrix.RotateAt(45, new PointF(x + size / 2, y + size / 2));
 
             g.Transform = matrix;
             g.FillRectangle(Brushes.White, x, y, size, size);
-            g.FillRectangle(Brushes.Black, x + size / 4, y + size / 4, size / 2, size / 2);
             g.DrawRectangle(pen, x, y, size, size);
+
+            if (isTwoSquare)
+                g.FillRectangle(Brushes.Black, x + size / 4, y + size / 4, size / 2, size / 2);
 
             matrix.Reset();
             g.Transform = matrix;
         }
     }
-
-
-
-
 }
